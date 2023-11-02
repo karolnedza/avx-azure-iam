@@ -12,7 +12,7 @@ resource "azurerm_role_definition" "subscription" {
 
   permissions {
     actions     = [     
-      "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*", 
+      "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*",  # need to check
       "Microsoft.Compute/*/read",
       #"Microsoft.Compute/availabilitySets/*",
       #"Microsoft.Compute/virtualMachines/*",
@@ -23,12 +23,12 @@ resource "azurerm_role_definition" "subscription" {
       #"Microsoft.Network/loadBalancers/*",
       #"Microsoft.Network/routeTables/*",
       #"Microsoft.Network/virtualNetworks/*",
-      "Microsoft.Storage/storageAccounts/*",    # backup/restore and ?
+      #"Microsoft.Storage/storageAccounts/*", 
       "Microsoft.Resources/*/read",
       "Microsoft.Resourcehealth/healthevent/*",
       #"Microsoft.Resources/deployments/*",
-      #"Microsoft.Resources/tags/*",            
-      "Microsoft.Resources/marketplace/purchase/action"  # ?
+      #"Microsoft.Resources/tags/*",                     # need to check 
+      "Microsoft.Resources/marketplace/purchase/action"  # need to check
       #"Microsoft.Resources/subscriptions/resourceGroups/*"
       ]
     not_actions = []
@@ -64,7 +64,7 @@ resource "azurerm_role_definition" "resource-group" {
       "Microsoft.Network/loadBalancers/*",
       "Microsoft.Network/routeTables/*",
       "Microsoft.Network/virtualNetworks/*",
-      "Microsoft.Storage/storageAccounts/*",    
+      #"Microsoft.Storage/storageAccounts/*",      # need to check it (controller is on AWS)
       "Microsoft.Resources/*/read",
       "Microsoft.Resourcehealth/healthevent/*",
       "Microsoft.Resources/deployments/*",
