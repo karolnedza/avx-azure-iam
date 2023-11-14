@@ -12,7 +12,7 @@ resource "azurerm_role_definition" "subscription" {
 
   permissions {
     actions     = [     
-      "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*",  # need to check
+      "Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*",  # needed to deploy GW images 
       "Microsoft.Compute/*/read",
       #"Microsoft.Compute/availabilitySets/*",
       #"Microsoft.Compute/virtualMachines/*",
@@ -27,9 +27,10 @@ resource "azurerm_role_definition" "subscription" {
       "Microsoft.Resources/*/read",
       "Microsoft.Resourcehealth/healthevent/*",
       #"Microsoft.Resources/deployments/*",
-      #"Microsoft.Resources/tags/*",                     # need to check 
-      "Microsoft.Resources/marketplace/purchase/action"  # need to check
+      "Microsoft.Resources/tags/read",                     # read is enough
+      #"Microsoft.Resources/marketplace/purchase/action"   # works without
       #"Microsoft.Resources/subscriptions/resourceGroups/*"
+      "Microsoft.Resources/subscriptions/resourceGroups/read" # read is enough
       ]
     not_actions = []
   }
@@ -53,25 +54,25 @@ resource "azurerm_role_definition" "resource-group" {
 
   permissions {
     actions     = [     
-      #"Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*", 
+      #"Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements/*",  # this is inherited from subscription 
       "Microsoft.Compute/*/read",
       "Microsoft.Compute/availabilitySets/*",
       "Microsoft.Compute/virtualMachines/*",
       "Microsoft.Network/*/read",
       "Microsoft.Network/publicIPAddresses/*",
-      "Microsoft.Network/networkInterfaces/*",
+      "Microsoft.Network/networkInterfaces/*",  
       "Microsoft.Network/networkSecurityGroups/*",
       "Microsoft.Network/loadBalancers/*",
       "Microsoft.Network/routeTables/*",
       "Microsoft.Network/virtualNetworks/*",
-      #"Microsoft.Storage/storageAccounts/*",      # need to check it (controller is on AWS)
+      #"Microsoft.Storage/storageAccounts/*",      # needed only for FW bootstrap 
       "Microsoft.Resources/*/read",
       "Microsoft.Resourcehealth/healthevent/*",
       "Microsoft.Resources/deployments/*",
       "Microsoft.Resources/tags/*",            
       #"Microsoft.Resources/marketplace/purchase/action"   
       #"Microsoft.Resources/subscriptions/resourceGroups/"
-      "Microsoft.Resources/subscriptions/resourceGroups/read" # Read should be enough
+      #"Microsoft.Resources/subscriptions/resourceGroups/read" # this is inherited from subscription 
       ]
     not_actions = []
   }
